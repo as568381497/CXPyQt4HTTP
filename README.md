@@ -1,26 +1,47 @@
 # CXPyQt4HTTP
 
 
-PyQt4x下的网络请求，自己封装了一下，好用一点
+嫌麻烦自己封装的请求类，目前已实现异步请求
 
-PyQt是不支持网络图片的，所以自己加了个能够下载网上网络图片的方法，优点是可以下载网上了各种网络图片，在本地控件上显示，其实也是从网上下载，然后转换为本地可以显示的图片格式。缺点是，目前方法是同步的，异步处理需要后续研究了加上，还有很大的优化空间
+例子
+~~~
+
+import HttpRequestUtils
+from PyQt4 import QtCore,QtGui
+
+class Widget(QtGui.QMainWindow):
+
+def __init__(self, parent=None):
+    QtGui.QWidget.__init__(self, parent)
+
+def initUI(self, WEBData):
+    self.setGeometry(300, 200, 600, 600)
+    self.setWindowTitle(WEBData)
+
+    thread = RequestThread()
+    thread.requestURL = "https://www.apiopen.top/femaleNameApi"
+    thread.requestData = {
+    'page': 1
+    }
+    thread.requestState = 'get'
+    thread.trigger.connect(self.changeValue)
+    thread.start()
+
+    self.show()
+
+def changeValue(self, dic):
+    print "回传成功"
+    print dic
+    self.setWindowTitle(str(dic['code']))
+
+
+if __name__ == '__main__':
+    app = QtGui.QApplication(sys.argv)
+    widget = Widget()
+    widget.initUI(sys.argv[0])
+    widget.show()
+    sys.exit(app.exec_())
 
 ~~~
 
-一、使用前导入相关库
-1.requests
-2.PIL
 
-二、导入头文件
-import requests
-import json
-import hashlib
-import random
-import time
-from PIL import Image
-from PyQt4 import QtGui
-from PyQt4 import QtCore
-
-~~~
-
-然后就可以了
