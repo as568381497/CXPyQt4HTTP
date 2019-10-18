@@ -1,7 +1,7 @@
 # CXPyQt4HTTP
 
 
-嫌麻烦自己封装的请求类，目前已实现异步请求
+嫌麻烦自己封装的简单请求类，目前已实现异步请求
 
 例子
 ~~~
@@ -17,7 +17,7 @@ def __init__(self, parent=None):
 def initUI(self, WEBData):
     self.setGeometry(300, 200, 600, 600)
     self.setWindowTitle(WEBData)
-
+    #添加网络请求
     thread = RequestThread()
     thread.requestURL = "https://www.apiopen.top/femaleNameApi"
     thread.requestData = {
@@ -25,6 +25,7 @@ def initUI(self, WEBData):
     }
     thread.requestState = 'get'
     thread.trigger.connect(self.changeValue)
+    #请求开始
     thread.start()
 
     self.show()
